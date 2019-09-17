@@ -12,6 +12,6 @@ namespace PingPong.Data
 
 		[MaxLength(64)]
 		public string LastName { get; set; }
-		public DateTime CreatedOn { get; set; }			
+		public DateTime CreatedOn { get; set; }	
     }
 }

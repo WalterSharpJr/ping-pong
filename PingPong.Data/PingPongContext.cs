@@ -10,6 +10,8 @@ namespace PingPong.Data
 		}
 
 		public DbSet<Player> Players { get; set; }
-        public DbSet<Game> Games { get; set; }		
+        public DbSet<Game> Games { get; set; }
+		public DbSet<Ranking> Rankings { get; set; }
+		public DbSet<RankingJob> RankingJobs { get; set; }
     }
 }

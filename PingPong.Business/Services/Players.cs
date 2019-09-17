@@ -14,6 +14,13 @@ namespace PingPong.Business.Services
 			this.Context = context;
 		}
 
+		/// <summary>
+		/// Returns a paginated collection of player entities filtered by first and last name if needed
+		/// </summary>
+		/// <param name="search">String containing the term to filter players by their first and last names</param>
+		/// <param name="pageIndex">The offset to begin returning result from</param>
+		/// <param name="pageCount">The total number of results to return</param>
+		/// <returns>Collection of Data.Player models</returns>
 		public Models.RequestResult<List<Data.Player>> Get(string search, int pageIndex, int pageCount)
 		{
 			try	
@@ -29,29 +36,34 @@ namespace PingPong.Business.Services
 
 				return Models.RequestResult<List<Data.Player>>.GetSuccess(results);
 			}
-			catch(Exception ex)
+			catch(Exception)
 			{
 				return Models.RequestResult<List<Data.Player>>.GetFail(StatusCodes.Status500InternalServerError, null);
 			}
 		}
 
+		/// <summary>
+		/// Creates a player entity in the database
+		/// </summary>
+		/// <param name="player">Player model containing the player's details</param>
+		/// <returns>RequestResult object</returns>
 		public Models.RequestResult Create(Data.Player player)
 		{
 			try
-			{
-				
-					player.CreatedOn = DateTime.Now;
-					player.Id = Guid.NewGuid();
+			{				
+				player.CreatedOn = DateTime.Now;
+				player.Id = Guid.NewGuid();
 
-					Context.Players.Add(player);
-					Context.SaveChanges();
+				Context.Players.Add(player);
+				Context.SaveChanges();
 
-					return Models.RequestResult.GetSuccess();
-				
-					//return Models.RequestResult.GetFail(StatusCodes.Status400BadRequest);
-				
+				return Models.RequestResult.GetSuccess();
 			}
-			catch(Exception ex)
+			catch(Microsoft.EntityFrameworkCore.DbUpdateException)
+			{				
+				return Models.RequestResult.GetFail(StatusCodes.Status400BadRequest);
+			}
+			catch(Exception)
 			{
 				return Models.RequestResult.GetFail(StatusCodes.Status500InternalServerError);
 			}

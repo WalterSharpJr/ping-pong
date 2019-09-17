@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore.Design;
 
 namespace PingPong.Data
 {
+	/// <summary>
+	/// Provides design time access to the PingPongContext object. Primarily used for the EF Migrations CLI tool
+	/// </summary>
     public class PingPongDesignTimeContext : IDesignTimeDbContextFactory<PingPongContext>
     {    
         public PingPongContext CreateDbContext(string[] args)

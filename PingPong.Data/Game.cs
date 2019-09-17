@@ -1,6 +1,6 @@
 using System;
 
-namespace PingPong.API.Data
+namespace PingPong.Data
 {
     public class Game
     {

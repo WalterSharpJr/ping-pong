@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PingPong.API.Data.Migrations
+namespace PingPong.Data.Migrations
 {
     public partial class Initial : Migration
     {

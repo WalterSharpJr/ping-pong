@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using PingPong.API.Data;
+using PingPong.Data;
 
-namespace PingPong.API.Data.Migrations
+namespace PingPong.Data.Migrations
 {
     [DbContext(typeof(PingPongContext))]
     partial class PingPongContextModelSnapshot : ModelSnapshot
@@ -16,10 +16,10 @@ namespace PingPong.API.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
-                .HasAnnotation("ProductVersion", "2.2.4-servicing-10062")
+                .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
-            modelBuilder.Entity("PingPong.API.Data.Game", b =>
+            modelBuilder.Entity("PingPong.Data.Game", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -47,33 +47,35 @@ namespace PingPong.API.Data.Migrations
                     b.ToTable("Games");
                 });
 
-            modelBuilder.Entity("PingPong.API.Data.Player", b =>
+            modelBuilder.Entity("PingPong.Data.Player", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<DateTime>("CreatedOn");
 
-                    b.Property<string>("FirstName");
+                    b.Property<string>("FirstName")
+                        .HasMaxLength(64);
 
-                    b.Property<string>("LastName");
+                    b.Property<string>("LastName")
+                        .HasMaxLength(64);
 
                     b.HasKey("Id");
 
                     b.ToTable("Players");
                 });
 
-            modelBuilder.Entity("PingPong.API.Data.Game", b =>
+            modelBuilder.Entity("PingPong.Data.Game", b =>
                 {
-                    b.HasOne("PingPong.API.Data.Player", "Player1")
+                    b.HasOne("PingPong.Data.Player", "Player1")
                         .WithMany()
                         .HasForeignKey("Player1Id");
 
-                    b.HasOne("PingPong.API.Data.Player", "Player2")
+                    b.HasOne("PingPong.Data.Player", "Player2")
                         .WithMany()
                         .HasForeignKey("Player2Id");
 
-                    b.HasOne("PingPong.API.Data.Player", "WinningPlayer")
+                    b.HasOne("PingPong.Data.Player", "WinningPlayer")
                         .WithMany()
                         .HasForeignKey("WinningPlayerId");
                 });

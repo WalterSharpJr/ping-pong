@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace PingPong.API.Data
+namespace PingPong.Data
 {
     public class PingPongContext: DbContext
     {

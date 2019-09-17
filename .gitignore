@@ -1,2 +1,8 @@
 PingPong.API/obj/**
 PingPong.API/bin/**
+
+PingPong.Data/obj/**
+PingPong.Data/bin/**
+
+PingPong.Business/obj/**
+PingPong.Business/bin/**

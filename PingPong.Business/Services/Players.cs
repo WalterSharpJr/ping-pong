@@ -45,7 +45,7 @@ namespace PingPong.Business.Services
 				{
 					var player = new Models.Player();
 					player.Id = result.Id;
-					player.Name = $"{result.FirstName} {result.LastName}";
+					player.Name = result.GetName();
 					player.Rank = result.Rank.Rank;
 					player.GamesPlayed = games.Where(g => g.Player1Id == result.Id || g.Player2Id == result.Id).Count();
 					player.GamesWon = games.Where(g => g.WinningPlayerId == result.Id).Count();
@@ -107,7 +107,7 @@ namespace PingPong.Business.Services
 
 				existingPlayer.FirstName = player.FirstName;
 				existingPlayer.LastName = player.LastName;
-								
+
 				Context.SaveChanges();
 
 				return Models.RequestResult.GetSuccess();

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PingPong.Business.Services
 {
-    public class Games
+    public class Games: IGamesService
     {
 		private readonly Data.PingPongContext Context;
 
@@ -22,7 +22,7 @@ namespace PingPong.Business.Services
 		/// <param name="pageIndex">The offset to begin returning result from</param>
 		/// <param name="pageCount">The total number of results to return</param>
 		/// <returns>Collection of Models.Game objects</returns>
-		public Models.RequestResult<List<Models.Game>> Get(string search, int pageIndex, int pageCount)
+		public Models.RequestResult<IEnumerable<Models.Game>> Get(string search, int pageIndex, int pageCount)
 		{
 			try
 			{				
@@ -53,12 +53,12 @@ namespace PingPong.Business.Services
 					games.Add(game);
 				}
 
-				return Models.RequestResult<List<Models.Game>>.GetSuccess(games);
+				return Models.RequestResult<IEnumerable<Models.Game>>.GetSuccess(games);
 				
 			}
 			catch (Exception)
 			{
-				return Models.RequestResult<List<Models.Game>>.GetFail(StatusCodes.Status500InternalServerError, null);
+				return Models.RequestResult<IEnumerable<Models.Game>>.GetFail(StatusCodes.Status500InternalServerError, null);
 			}
 		}
 

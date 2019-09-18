@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace PingPong.Business.Services
 {
-    public class Ranking
+    public class Ranking: IRankingService
     {
 		private readonly Data.PingPongContext Context;
 
@@ -21,7 +21,7 @@ namespace PingPong.Business.Services
 		/// <param name="pageIndex">The offset to begin returning result from</param>
 		/// <param name="pageCount">The total number of results to return</param>
 		/// <returns>Collection of Models.Ranking objects</returns>
-		public Models.RequestResult<List<Models.Ranking>> Get(int pageIndex, int pageCount)
+		public Models.RequestResult<IEnumerable<Models.Ranking>> Get(int pageIndex, int pageCount)
 		{
 			try
 			{
@@ -32,7 +32,7 @@ namespace PingPong.Business.Services
 				if(latestJob == null)
 				{
 					//no ranking jobs have yet been run, return empty list
-					return Models.RequestResult<List<Models.Ranking>>.GetSuccess(StatusCodes.Status204NoContent, null);
+					return Models.RequestResult<IEnumerable<Models.Ranking>>.GetSuccess(StatusCodes.Status204NoContent, null);
 				}
 
 				var results = Context.Rankings.Where(r => r.RankingJobId == latestJob.Id)
@@ -54,11 +54,11 @@ namespace PingPong.Business.Services
 					rankings.Add(ranking);
 				}
 
-				return Models.RequestResult<List<Models.Ranking>>.GetSuccess(rankings);
+				return Models.RequestResult<IEnumerable<Models.Ranking>>.GetSuccess(rankings);
 			}
 			catch (Exception)
 			{				
-				return Models.RequestResult<List<Models.Ranking>>.GetFail(StatusCodes.Status500InternalServerError, null);
+				return Models.RequestResult<IEnumerable<Models.Ranking>>.GetFail(StatusCodes.Status500InternalServerError, null);
 			}
 		}
     }

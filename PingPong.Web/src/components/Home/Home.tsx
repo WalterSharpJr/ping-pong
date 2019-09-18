@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import Sidebar from '../Sidebar/Sidebar'
 import Games from '../AppPages/Games';
@@ -16,11 +16,13 @@ export default class Home extends React.Component
 				<div id="content-wrapper" className="d-flex flex-column">
 					<Topbar></Topbar>
         			<div className="container-fluid">
-          				<div className="row">						  	
-							<Switch>
-								<Route path="/games" component={ Games } />
-								<Route path="/players" component={ Players } />
-							</Switch>							
+          				<div className="row">
+							<div className="col-12">
+								<Switch>
+									<Route path="/games" component={ Games } />
+									<Route path="/players" component={ Players } />
+								</Switch>
+							</div>							
           				</div>
         			</div>
       			</div>

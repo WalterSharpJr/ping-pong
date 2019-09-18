@@ -10,7 +10,6 @@ namespace PingPong.Data
 		public int Rank { get; set; }
 
 		public RankingJob RankingJob { get; set; }
-		public Ranking PreviousRank { get; set; }
 		public Player Player { get; set; }
 	}
 }	

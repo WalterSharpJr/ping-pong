@@ -38,7 +38,7 @@ namespace PingPong.Business.Services
 				var results = Context.Rankings.Where(r => r.RankingJobId == latestJob.Id)
 												.OrderByDescending(r => r.Rank)
 												.Skip(pageIndex * pageCount).Take(pageCount)
-												.Include(r => r.Player).Include(r => r.PreviousRank.Rank)
+												.Include(r => r.Player)
 												.ToList();
 
 				var rankings = new List<Models.Ranking>();
@@ -47,8 +47,7 @@ namespace PingPong.Business.Services
 				{
 					var ranking = new Models.Ranking();
 					ranking.Player = result.Player.GetName();
-					ranking.PlayerId = result.PlayerId;
-					ranking.PreviousRank = result.PreviousRank.Rank;
+					ranking.PlayerId = result.PlayerId;					
 					ranking.Rank = result.Rank;
 
 					rankings.Add(ranking);

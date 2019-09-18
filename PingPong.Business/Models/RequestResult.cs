@@ -62,6 +62,11 @@ namespace PingPong.Business.Models
 			return new Models.RequestResult<T>(true, 200, data);
 		}
 
+		public static RequestResult<T> GetSuccess(int code, T data)
+		{
+			return new Models.RequestResult<T>(true, code, data);
+		}
+
 		public static RequestResult<T> GetFail(int code, T data)
 		{
 			return new Models.RequestResult<T>(false, code, data);

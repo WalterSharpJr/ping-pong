@@ -6,8 +6,10 @@ namespace PingPong.Data
     {
         public Guid Id { get; set; }
 		public Guid PlayerId { get; set; }
+		public Guid RankingJobId { get; set; }
 		public int Rank { get; set; }
 
+		public RankingJob RankingJob { get; set; }
 		public Ranking PreviousRank { get; set; }
 		public Player Player { get; set; }
 	}

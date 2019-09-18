@@ -1,5 +1,7 @@
 import React from 'react';
-import Sidebar from './components/Sidebar/Sidebar'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+
+import Home from './components/Home/Home'
 
 export default class App extends React.Component
 {
@@ -7,7 +9,9 @@ export default class App extends React.Component
 	{
 		return (
 			<div>
-				<Sidebar></Sidebar>
+				<Router>
+					<Route path="/" component={ Home } />
+				</Router>
 			</div>
 		)
 	}

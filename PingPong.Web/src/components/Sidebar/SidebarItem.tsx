@@ -8,12 +8,12 @@ export default class SidebarItem extends React.Component<{ text: string, route: 
 	render()
 	{
 		return (
-			<li className="nav-item">
-				<NavLink className="nav-link" to={ this.props.route }>
+			<NavLink className="nav-item" style={{ textDecoration: 'none' }} to={ this.props.route }>
+				<li className="nav-link">
 					{ this.props.icon && <FontAwesomeIcon fixedWidth icon={ this.props.icon }></FontAwesomeIcon> }
 					<span style={ { marginLeft: '5px'} }>{ this.props.text }</span> 
-				</NavLink>
-     		</li>
+     			</li>
+			</NavLink>
 		);
 	}
 }

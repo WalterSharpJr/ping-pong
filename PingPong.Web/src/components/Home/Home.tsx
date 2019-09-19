@@ -1,10 +1,12 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Sidebar from '../Sidebar/Sidebar'
+import Sidebar from '../Sidebar/Sidebar';
+import Topbar from '../Topbar/Topbar';
 import Games from '../AppPages/Games';
 import Players from '../AppPages/Players';
-import Topbar from '../Topbar/Topbar';
+import Rankings from '../AppPages/Rankings';
+import RankingJobs from '../AppPages/RankingJobs';
 
 export default class Home extends React.Component
 {
@@ -21,6 +23,9 @@ export default class Home extends React.Component
 								<Switch>
 									<Route path="/games" component={ Games } />
 									<Route path="/players" component={ Players } />
+									<Route path="/ranking" component={ Rankings } />
+									<Route path="/ranking-jobs" component={ RankingJobs } />
+									<Redirect from="/" to="/games"/>
 								</Switch>
 							</div>							
           				</div>

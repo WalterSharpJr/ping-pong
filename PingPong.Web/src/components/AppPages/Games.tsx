@@ -11,7 +11,7 @@ export default class Games extends React.Component
 		return (
 			<Page title="Games">
 				<Filterbox>
-					<Searchbox placeholder="Search...">
+					<Searchbox placeholder="Search Games...">
 
 					</Searchbox>
 				</Filterbox>

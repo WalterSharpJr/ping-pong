@@ -8,7 +8,7 @@ export default class SearchBox extends React.Component<{ text: string, placehold
 	render()
 	{
 		return (
-			<form className="d-none d-sm-inline-block form-inline my-md-0 mw-100">
+			<form className="d-sm-inline-block form-inline my-md-0 mw-100">
 				<div className="input-group">
 					<input value={ this.props.text } type="text" className="form-control bg-light border-0 small" placeholder={ this.props.placeholder } />
 					<div className="input-group-append">

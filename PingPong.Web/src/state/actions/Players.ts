@@ -1,7 +1,7 @@
 import Filters from "../../models/Filters";
 import { default as PlayerVM } from "../../viewModels/Player";
 
-export enum PlayerActions { FETCH_PLAYER, PLAYER_FETCH_SUCCESS, PLAYER_FETCH_FAIL }
+export enum PlayerActions { FETCH_PLAYER = 'PLAYERS_FETCH', PLAYER_FETCH_SUCCESS = 'PLAYERS_FETCH_SUCCESS', PLAYER_FETCH_FAIL = 'PLAYERS_FETCH_FAIL' }
 
 export function fetchPlayers(filters: Filters)
 {

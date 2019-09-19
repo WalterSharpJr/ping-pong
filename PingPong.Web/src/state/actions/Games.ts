@@ -1,7 +1,7 @@
 import Filters from "../../models/Filters";
 import Game from "../../viewModels/Game";
 
-export enum GameActions { FETCH_GAMES, GAME_FETCH_SUCCESS, GAME_FETCH_FAIL }
+export enum GameActions { FETCH_GAMES = 'GAMES_FETCH', GAME_FETCH_SUCCESS = 'GAMES_FETCH_SUCCESS', GAME_FETCH_FAIL = 'GAMES_FETCH_FAIL' }
 
 export function fetchGames(filters: Filters)
 {

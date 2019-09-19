@@ -3,9 +3,10 @@ import Filters from "../models/Filters";
 import { fetchGames } from '../state/actions/Games'
 import { ApplicationState } from '../state/ApplicationState'
 import Games from '../components/AppPages/Games'
+import Game from '../viewModels/Game';
 
 const mapStateToProps = (state: ApplicationState) => 
-{
+{	
 	return {
 	  	filter: state.Games.Filter, 
 	  	games: state.Games.Data, 

@@ -30,8 +30,8 @@ namespace PingPong.Business.Services
 
 				if(String.IsNullOrWhiteSpace(search) == false)
 				{
-					query = query.Where(g => g.Player1.FirstName.Contains(search) || g.Player1.LastName.Contains(search) || 
-											g.Player2.FirstName.Contains(search) || g.Player2.LastName.Contains(search));
+					query = query.Where(g => g.Player1.FirstName.ToUpper().Contains(search.ToUpper()) || g.Player1.LastName.ToUpper().Contains(search.ToUpper()) || 
+											g.Player2.FirstName.ToUpper().Contains(search.ToUpper()) || g.Player2.LastName.ToUpper().Contains(search.ToUpper()));
 				}
 
 				var results = query.OrderByDescending(g => g.PlayedOn).Skip(pageIndex * pageCount).Take(pageCount).

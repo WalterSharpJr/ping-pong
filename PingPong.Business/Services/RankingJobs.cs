@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace PingPong.Business.Services
 {
@@ -46,7 +47,7 @@ namespace PingPong.Business.Services
 			}
 			catch (Exception)
 			{
-				//log the failure to rank
+				//log the failure to rank players
 			}			
 		}
 
@@ -74,6 +75,26 @@ namespace PingPong.Business.Services
 			catch (Exception)
 			{
 				return Models.RequestResult.GetFail(StatusCodes.Status500InternalServerError);
+			}
+		}
+
+		/// <summary>
+		/// Returns a paginated collection of ranking jobs
+		/// </summary>		
+		/// <param name="pageIndex">The offset to begin returning result from</param>
+		/// <param name="pageCount">The total number of results to return</param>
+		/// <returns>Collection of Data.RankingJob objects</returns>
+		public Models.RequestResult<IEnumerable<Data.RankingJob>> Get(int pageIndex, int pageCount)
+		{
+			try	
+			{
+				var results = Context.RankingJobs.OrderByDescending(j => j.StartedOn).Skip(pageIndex * pageCount).Take(pageCount).ToList();
+								
+				return Models.RequestResult<IEnumerable<Data.RankingJob>>.GetSuccess(results);
+			}
+			catch(Exception)
+			{
+				return Models.RequestResult<IEnumerable<Data.RankingJob>>.GetFail(StatusCodes.Status500InternalServerError, null);
 			}
 		}
     }

@@ -7,7 +7,7 @@ import Players from '../components/AppPages/Players'
 const mapStateToProps = (state: ApplicationState) => 
 {	
 	return {	  	
-	  	players: state.Players.Data, 
+	  	request: state.Players.RequestResult, 
 	  	dataState: state.Players.DataState
 	}
 }

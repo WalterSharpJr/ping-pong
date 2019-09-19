@@ -42,12 +42,14 @@ namespace PingPong.Business.Models
     {
 		
 		public T Data { get; set; }
+		public int TotalPages { get; set; }
 		
-		public RequestResult(bool success, int resultCode, T data)
+		public RequestResult(bool success, int resultCode, T data, int totalPages)
 		{
 			Success = success;
 			ResultCode = resultCode;
 			Data = data;
+			TotalPages = totalPages;
 		}
 
 		public void SetSuccess(T data)
@@ -59,17 +61,22 @@ namespace PingPong.Business.Models
 
 		public static RequestResult<T> GetSuccess(T data)
 		{
-			return new Models.RequestResult<T>(true, 200, data);
+			return new Models.RequestResult<T>(true, 200, data, 0);
+		}
+
+		public static RequestResult<T> GetSuccess(T data, int totalPages)
+		{
+			return new Models.RequestResult<T>(true, 200, data, totalPages);
 		}
 
 		public static RequestResult<T> GetSuccess(int code, T data)
 		{
-			return new Models.RequestResult<T>(true, code, data);
+			return new Models.RequestResult<T>(true, code, data, 0);
 		}
 
 		public static RequestResult<T> GetFail(int code, T data)
 		{
-			return new Models.RequestResult<T>(false, code, data);
+			return new Models.RequestResult<T>(false, code, data, 0);
 		}
 	}
 }

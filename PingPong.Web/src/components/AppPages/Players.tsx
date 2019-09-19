@@ -11,9 +11,10 @@ import Filters from '../../models/Filters'
 import { PageDataState } from '../../state/ApplicationState'
 import AddEditPlayer from './AddEditPlayer'
 import Spinner from '../Utilities/Spinner'
-import { requestPlayers } from '../../state/actions/Players'
+import Paginationbar from '../Filtering/Paginationbar'
+import { TypedRequestResult } from '../../models/RequestResult'
 
-export default class Players extends React.Component<{ onGetPlayers: (filters: Filters) => void, players: Player[], dataState: PageDataState }>
+export default class Players extends React.Component<{ onGetPlayers: (filters: Filters) => void, request: TypedRequestResult<Player[]>, dataState: PageDataState }>
 {
 	private AddEditPlayer: RefObject<AddEditPlayer>; 
 	private Filter: Filters;
@@ -24,7 +25,7 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
 
 		this.AddEditPlayer = React.createRef();
 
-		this.Filter = { Search: "", PageCount: 20, PageIndex: 0 }		
+		this.Filter = { Search: "", PageCount: 5, PageIndex: 0 }		
 	}
 
 	componentWillMount = () =>
@@ -52,7 +53,8 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
                     	<span className="text">Add Player</span>
                   	</a>
 				</Filterbox>
-				{ this.props.players && this.props.players.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				{ this.props.request && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				<div>
 				<div className="row">
 					<div className="col-sm-12">
 						<table className="table table-bordered dataTable">
@@ -66,7 +68,7 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
 							</thead>                  
 							<tbody>
 								{ 
-									this.props.players.map((p, i) => 
+									this.props.request.data.map((p, i) => 
 										<tr key={ 'player' + i}>											
 											<td>
 												{p.name}
@@ -86,15 +88,25 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
 							</tbody>
 						</table>
 					</div>
-				</div>	}
+				</div>	
+					<div className="row">
+						<div className="col-12">
+							<Paginationbar 	onNextClick={ (p) => { this.Filter.PageIndex = p; this.props.onGetPlayers(this.Filter) } } 
+								onPreviousClick={ (p) => { this.Filter.PageIndex = p; this.props.onGetPlayers(this.Filter) } }
+								pageCount={this.props.request.totalPages} pageIndex={ this.Filter.PageIndex }></Paginationbar>
+						</div>
+					</div>
+				</div>
+				}
 				
 				{ this.props.dataState === PageDataState.FETCHING &&
 					<Spinner></Spinner>
 				}
 
-				{ (this.props.players === null || this.props.players.length === 0) && this.props.dataState != PageDataState.FETCHING &&
+				{ (this.props.request === null || this.props.request.data === null || this.props.request.data.length === 0) && this.props.dataState != PageDataState.FETCHING &&
 					<NoResults></NoResults>
 				}	
+
 
 				<AddEditPlayer onPlayerAdded={ () => { this.props.onGetPlayers(this.Filter) } } ref={this.AddEditPlayer}></AddEditPlayer>	
 			</Page>

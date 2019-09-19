@@ -7,4 +7,5 @@ export interface RequestResult
 export interface TypedRequestResult<T> extends RequestResult
 {
 	data: T;
+	totalPages: number;
 }

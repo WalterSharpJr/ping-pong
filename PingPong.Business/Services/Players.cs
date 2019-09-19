@@ -32,7 +32,8 @@ namespace PingPong.Business.Services
 				{
 					query = query.Where(p => p.FirstName.ToUpper().Contains(search.ToUpper()) || p.LastName.ToUpper().Contains(search.ToUpper()));
 				}
-								
+
+				var totalPages = (int)Math.Ceiling(decimal.Divide(query.Count(), pageCount));
 				var results = query.OrderBy(p => p.FirstName).Skip(pageIndex * pageCount).Take(pageCount).ToList();
 				var playerIds = results.Select(p => p.Id);
 
@@ -53,7 +54,7 @@ namespace PingPong.Business.Services
 					players.Add(player);
 				}
 
-				return Models.RequestResult<IEnumerable<Models.Player>>.GetSuccess(players);
+				return Models.RequestResult<IEnumerable<Models.Player>>.GetSuccess(players, totalPages);
 			}
 			catch(Exception)
 			{

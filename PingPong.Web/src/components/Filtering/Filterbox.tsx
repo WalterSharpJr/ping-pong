@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default class Games extends React.Component
+export default class Filterbox extends React.Component
 {
 	render()
 	{

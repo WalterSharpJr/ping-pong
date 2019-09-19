@@ -8,7 +8,7 @@ import Game from '../viewModels/Game';
 const mapStateToProps = (state: ApplicationState) => 
 {	
 	return {	  	
-	  	games: state.Games.Data, 
+	  	request: state.Games.RequestResult, 
 	  	dataState: state.Games.DataState
 	}
 }

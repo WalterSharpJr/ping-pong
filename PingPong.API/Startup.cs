@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
+using PingPong.Business.Services;
 
 namespace PingPong.API
 {
@@ -29,6 +30,11 @@ namespace PingPong.API
 			services.AddCors();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 			services.AddDbContext<Data.PingPongContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Main")));
+
+			services.AddScoped<IPlayersService, Players>();
+			services.AddScoped<IGamesService, Games>();
+			services.AddScoped<IRankingService, Ranking>();
+			//services.AddScoped<IRank, Ranking>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -44,6 +50,7 @@ namespace PingPong.API
                 app.UseHsts();
             }
 
+			app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseMvc();
         }

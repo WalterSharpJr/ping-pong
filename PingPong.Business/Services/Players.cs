@@ -33,7 +33,7 @@ namespace PingPong.Business.Services
 					query = query.Where(p => p.FirstName.Contains(search) || p.LastName.Contains(search));
 				}
 								
-				var results = query.OrderBy(p => p.FirstName).Skip(pageIndex * pageCount).Take(pageCount).Include(p => p.Rank.Rank).ToList();
+				var results = query.OrderBy(p => p.FirstName).Skip(pageIndex * pageCount).Take(pageCount).ToList();
 				var playerIds = results.Select(p => p.Id);
 
 				var games = Context.Games.Where(g => playerIds.Contains(g.Player1Id) || playerIds.Contains(g.Player2Id)).ToList();
@@ -45,8 +45,7 @@ namespace PingPong.Business.Services
 				{
 					var player = new Models.Player();
 					player.Id = result.Id;
-					player.Name = result.GetName();
-					player.Rank = result.Rank.Rank;
+					player.Name = result.GetName();					
 					player.GamesPlayed = games.Where(g => g.Player1Id == result.Id || g.Player2Id == result.Id).Count();
 					player.GamesWon = games.Where(g => g.WinningPlayerId == result.Id).Count();
 					player.GamesLost = player.GamesPlayed - player.GamesLost;

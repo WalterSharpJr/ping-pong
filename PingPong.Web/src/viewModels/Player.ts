@@ -1,9 +1,8 @@
 export default interface Player
 {
-	Id: string;
-	Name: string;
-	GamesPlayed: number;
-	GamesWon: number;
-	GamesLost: number;
-	Rank: number;
+	id: string;
+	name: string;
+	gamesPlayed: number;
+	gamesWon: number;
+	gamesLost: number;	
 }

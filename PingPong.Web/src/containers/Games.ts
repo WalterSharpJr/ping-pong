@@ -7,8 +7,7 @@ import Game from '../viewModels/Game';
 
 const mapStateToProps = (state: ApplicationState) => 
 {	
-	return {
-	  	filter: state.Games.Filter, 
+	return {	  	
 	  	games: state.Games.Data, 
 	  	dataState: state.Games.DataState
 	}

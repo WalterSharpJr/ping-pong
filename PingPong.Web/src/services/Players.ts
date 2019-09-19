@@ -7,12 +7,12 @@ import { RequestResult, TypedRequestResult } from '../models/RequestResult'
 export default class Players
 {
 	GetPlayers(filter: Filters): Promise<TypedRequestResult<PlayerVM[]>>
-	{
+	{		
 		var promise = new Promise<TypedRequestResult<PlayerVM[]>>((resolve, reject) =>
 		{
-			fetch("http://localhost:5000/api/players/", 
+			fetch("https://localhost:5001/api/players/GetPlayers", 
 			{
-				method: "GET",
+				method: "POST",
 				body: JSON.stringify(filter),
 				headers: { "Content-Type": "application/json" },
 				credentials: "same-origin"
@@ -34,7 +34,7 @@ export default class Players
 	{
 		var promise = new Promise<RequestResult>((resolve, reject) =>
 		{
-			fetch("http://localhost:5000/api/players/", 
+			fetch("https://localhost:5001/api/players/", 
 			{
 				method: "POST",
 				body: JSON.stringify(player),

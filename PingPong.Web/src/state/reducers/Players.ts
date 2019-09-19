@@ -12,8 +12,12 @@ export function Players(state: PageState<Player[]>, action) : PageState<Player[]
 
 	switch (action.type) 
 	{
-		case PlayerActions.FETCH_PLAYER:
-			return {...state, DataState: PageDataState.FETCHING }				
+		case PlayerActions.FETCH_PLAYERS:
+			return {...state, DataState: PageDataState.FETCHING }	
+		case PlayerActions.PLAYER_FETCH_SUCCESS:
+			return {...state, DataState: PageDataState.SUCCESS, Data: action.players }
+		case PlayerActions.PLAYER_FETCH_SUCCESS:
+			return {...state, DataState: PageDataState.ERROR }
 		default:
 			return state;
 	}

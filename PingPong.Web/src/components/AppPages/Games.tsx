@@ -14,9 +14,7 @@ export default class Games extends React.Component<{ filter: Filters, games: Gam
 		return (
 			<Page title="Games">
 				<Filterbox>
-					<Searchbox text={ this.props.filter.Search } placeholder="Search Games...">
-
-					</Searchbox>
+					
 				</Filterbox>
 			</Page>
 		);

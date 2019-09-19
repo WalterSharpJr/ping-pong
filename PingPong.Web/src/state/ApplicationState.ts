@@ -8,8 +8,7 @@ export enum PageDataState { NO_DATA, FETCHING, SUCCESS, ERROR }
 
 export interface PageState<T = {}>
 {
-	DataState: PageDataState;
-	Filter: Filters;
+	DataState: PageDataState;	
 	Data?: T | null;
 }
 
@@ -23,8 +22,8 @@ export interface ApplicationState
 
 export const initialState: ApplicationState = 
 {  
-	Games: { Data: null, DataState: PageDataState.NO_DATA, Filter: { PageCount: 20, PageIndex: 0, Search: "" } },
-	Players: { Data: null, DataState: PageDataState.NO_DATA, Filter: { PageCount: 20, PageIndex: 0, Search: "" } },
-	Rankings: { Data: null, DataState: PageDataState.NO_DATA, Filter: { PageCount: 50, PageIndex: 0, Search: "" } },
-	RankingJobs: { Data: null, DataState: PageDataState.NO_DATA, Filter: { PageCount: 10, PageIndex: 0, Search: "" } },
+	Games: { Data: null, DataState: PageDataState.NO_DATA },
+	Players: { Data: null, DataState: PageDataState.NO_DATA },
+	Rankings: { Data: null, DataState: PageDataState.NO_DATA },
+	RankingJobs: { Data: null, DataState: PageDataState.NO_DATA },
 };

@@ -1,10 +1,10 @@
 export interface RequestResult
 {
- 	Success: boolean;
-	ResultCode: boolean;
+ 	success: boolean;
+	resultCode: number;
 }
 
 export interface TypedRequestResult<T> extends RequestResult
 {
-	Data: T;
+	data: T;
 }

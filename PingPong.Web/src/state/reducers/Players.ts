@@ -1,18 +1,18 @@
-import { GameActions } from "../actions/Games";
+import { PlayerActions } from "../actions/Players";
 import { PageState, PageDataState } from "../ApplicationState";
-import Game from "../../viewModels/Game";
+import Player from "../../viewModels/Player";
 import { initialState } from '../ApplicationState'
 
-export function Games(state: PageState<Game[]>, action) : PageState<Game[]>
+export function Players(state: PageState<Player[]>, action) : PageState<Player[]>
 {
 	if(state === undefined)
 	{
-		return initialState.Games;
+		return initialState.Players;
 	}
 
 	switch (action.type) 
 	{
-		case GameActions.FETCH_GAMES:
+		case PlayerActions.FETCH_PLAYER:
 			return {...state, DataState: PageDataState.FETCHING }				
 		default:
 			return state;

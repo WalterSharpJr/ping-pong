@@ -1,4 +1,4 @@
-export interface Filters
+export default interface Filters
 {
 	Search: string;
 	PageIndex: number;

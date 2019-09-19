@@ -1,15 +1,10 @@
-import { GameActions } from '../actions/Games'
-import { Games as GamesReducer, Games } from './Games'
-import { ApplicationState } from '../ApplicationState';
-import { Action } from 'redux';
+import { Games as GamesReducer } from './Games'
+import { Players as PlayersReducer } from './Players'
+import { combineReducers } from 'redux';
 
-export function rootReducer(state: ApplicationState, action: Action)
-{
-	switch (action.type) 
-	{
-		case GameActions.FETCH_GAMES:
-			return Object.assign({}, state, {  Games: GamesReducer(state.Games, action) });			
-		default:
-			break;
-	}
-}
+const rootReducer = combineReducers({
+	GamesReducer,
+	PlayersReducer
+});
+
+export default rootReducer;

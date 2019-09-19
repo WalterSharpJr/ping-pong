@@ -11,10 +11,9 @@ export default class Players extends React.Component
 		return (
 			<Page title="Players">
 				<Filterbox>
-					<Searchbox placeholder="Search Players...">
-
-					</Searchbox>
+					
 				</Filterbox>
+				
 			</Page>
 		);
 	}

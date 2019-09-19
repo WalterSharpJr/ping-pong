@@ -1,4 +1,4 @@
-export interface Game
+export default interface Game
 {
 	Id: string;
 	PlayedOn: Date;

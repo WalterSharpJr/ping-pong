@@ -1,4 +1,4 @@
-export interface RankingJob
+export default interface RankingJob
 {
 	Id: string;
 	StartedOn: Date;

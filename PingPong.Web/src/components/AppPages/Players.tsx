@@ -25,7 +25,7 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
 
 		this.AddEditPlayer = React.createRef();
 
-		this.Filter = { Search: "", PageCount: 5, PageIndex: 0 }		
+		this.Filter = { Search: "", PageCount: 20, PageIndex: 0 }		
 	}
 
 	componentWillMount = () =>

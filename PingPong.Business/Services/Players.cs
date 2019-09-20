@@ -16,6 +16,38 @@ namespace PingPong.Business.Services
 		}
 
 		/// <summary>
+		/// Simple query for quickly searching for players based on their names, returns a maximum of 20 players
+		/// </summary>
+		/// <param name="search">The search term to filter by</param>
+		/// <returns>Collection of Player models with only their name and id properties populated</returns>
+		public Models.RequestResult<IEnumerable<Models.Player>> Search(string search)
+		{
+			try	
+			{
+				var query = Context.Players.Where(p => p.FirstName.ToUpper().Contains(search.ToUpper()) || p.LastName.ToUpper().Contains(search.ToUpper()));
+				var results = query.OrderBy(p => p.FirstName).Take(20).ToList();
+
+				//convert to player models
+				var players = new List<Models.Player>();
+
+				foreach (var result in results)
+				{
+					var player = new Models.Player();
+					player.Id = result.Id;
+					player.Name = result.GetName();	
+					
+					players.Add(player);
+				}
+
+				return Models.RequestResult<IEnumerable<Models.Player>>.GetSuccess(players, 0);
+			}
+			catch(Exception)
+			{
+				return Models.RequestResult<IEnumerable<Models.Player>>.GetFail(StatusCodes.Status500InternalServerError, null);
+			}
+		}
+
+		/// <summary>
 		/// Returns a paginated collection of player entities filtered by first and last name if needed
 		/// </summary>
 		/// <param name="search">String containing the term to filter players by their first and last names</param>
@@ -49,7 +81,7 @@ namespace PingPong.Business.Services
 					player.Name = result.GetName();					
 					player.GamesPlayed = games.Where(g => g.Player1Id == result.Id || g.Player2Id == result.Id).Count();
 					player.GamesWon = games.Where(g => g.WinningPlayerId == result.Id).Count();
-					player.GamesLost = player.GamesPlayed - player.GamesLost;
+					player.GamesLost = player.GamesPlayed - player.GamesWon;
 
 					players.Add(player);
 				}

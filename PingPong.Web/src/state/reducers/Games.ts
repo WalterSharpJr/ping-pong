@@ -13,7 +13,11 @@ export function Games(state: PageState<Game[]>, action) : PageState<Game[]>
 	switch (action.type) 
 	{
 		case GameActions.FETCH_GAMES:
-			return {...state, DataState: PageDataState.FETCHING }				
+			return {...state, DataState: PageDataState.FETCHING }	
+		case GameActions.GAME_FETCH_SUCCESS:
+			return {...state, DataState: PageDataState.SUCCESS, RequestResult: action.result }
+		case GameActions.GAME_FETCH_FAIL:
+			return {...state, DataState: PageDataState.ERROR }
 		default:
 			return state;
 	}

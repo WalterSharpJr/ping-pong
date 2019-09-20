@@ -1,10 +1,10 @@
 export default interface Game
 {
-	Id: string;
-	PlayedOn: Date;
-	Player1: string;
-	Player2: string;
-	Player1Score: number;
-	Player2Score: number;
-	Winner: string;
+	id: string;
+	playedOn: Date;
+	player1: string;
+	player2: string;
+	player1Score: number;
+	player2Score: number;
+	winner: string;
 }

@@ -22,17 +22,11 @@ namespace PingPong.Data
 			var validPlayers = (Player1Id != Guid.Empty && Player2Id != Guid.Empty)
 								&& (Player1Id != Player2Id);
 
-			//make sure the winner is valid
-			var validWinner = (WinningPlayerId == Player1Id) || (WinningPlayerId == Player2Id);
-
 			//make sure the scores are valid
 			var validScore = (Player1Score >= 0 && Player2Score >= 0) &&
 							((Player1Score > Player2Score) || (Player2Score > Player1Score));
-
-			//finally make sure the played on date is not in the future
-			var validDate = PlayedOn != null && PlayedOn < DateTime.Now;
-
-			return validDate && validPlayers && validScore && validWinner;
+			
+			return validPlayers && validScore;
 		}
 		
     }

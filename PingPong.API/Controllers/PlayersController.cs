@@ -24,5 +24,11 @@ namespace PingPong.API.Controllers
 		{
 			return PlayersService.Get(filter.Search, filter.PageIndex, filter.PageCount);
 		}
+
+		[HttpGet("Search")]
+		public Business.Models.RequestResult Search(string query)
+		{
+			return PlayersService.Search(query);
+		}
     }
 }

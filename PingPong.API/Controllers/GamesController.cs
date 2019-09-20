@@ -12,5 +12,17 @@ namespace PingPong.API.Controllers
 		{
 			GamesService = gamesService;
 		}
+
+		[HttpPost]
+		public Business.Models.RequestResult Create([FromBody]Data.Game game)
+		{
+			return GamesService.Create(game);
+		}
+
+		[HttpPost("GetGames")]
+		public Business.Models.RequestResult GetGames([FromBody]Business.Models.Filter filter)
+		{
+			return GamesService.Get(filter.Search, filter.PageIndex, filter.PageCount);
+		}
     }
 }

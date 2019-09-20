@@ -16,7 +16,7 @@ export function Players(state: PageState<Player[]>, action) : PageState<Player[]
 			return {...state, DataState: PageDataState.FETCHING }	
 		case PlayerActions.PLAYER_FETCH_SUCCESS:
 			return {...state, DataState: PageDataState.SUCCESS, RequestResult: action.result }
-		case PlayerActions.PLAYER_FETCH_SUCCESS:
+		case PlayerActions.PLAYER_FETCH_FAIL:
 			return {...state, DataState: PageDataState.ERROR }
 		default:
 			return state;

@@ -74,7 +74,9 @@ namespace PingPong.Business.Services
 				if(game.IsValid() == true)			
 				{
 					game.Id = Guid.NewGuid();
-					
+					game.WinningPlayerId = (game.Player1Score > game.Player2Score ? game.Player1Id : game.Player2Id);
+					game.PlayedOn = DateTime.Now;
+
 					Context.Games.Add(game);
 					Context.SaveChanges();
 

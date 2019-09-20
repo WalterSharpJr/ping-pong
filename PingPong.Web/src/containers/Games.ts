@@ -1,9 +1,8 @@
 import { connect } from 'react-redux'
 import Filters from "../models/Filters";
-import { fetchGames } from '../state/actions/Games'
+import { requestGames } from '../state/actions/Games'
 import { ApplicationState } from '../state/ApplicationState'
 import Games from '../components/AppPages/Games'
-import Game from '../viewModels/Game';
 
 const mapStateToProps = (state: ApplicationState) => 
 {	
@@ -16,7 +15,7 @@ const mapStateToProps = (state: ApplicationState) =>
 const mapDispatchToProps = dispatch => 
 {
 	return {
-	  	onSearchClick: (filter: Filters) => { dispatch(fetchGames(filter)) }
+	  	onGetGames: (filter: Filters) => { dispatch(requestGames(filter)) }
 	}
 }
 

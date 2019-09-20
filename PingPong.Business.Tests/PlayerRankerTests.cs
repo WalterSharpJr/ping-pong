@@ -3,17 +3,18 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using PingPong.Business.Services;
+using PingPong.Data;
 
 namespace PingPong.Business.Tests
 {
 	[TestClass]
 	public class PlayerRankerTests
-    {        
-        public PlayerRankerTests()
-        {
-            
-        }
-		
+    {
+		private PingPongContext Context;
+		private PlayerRanker Service;
+
+		Data.Player Player1, Player2, Player3, Player4, Player5, Player6;
+
 		void AddGame(Data.PingPongContext context, Guid player1, Guid player2, Byte player1Score, Byte player2Score, Guid winner)
 		{
 			context.Games.Add(new Data.Game() { Id = Guid.NewGuid(), 
@@ -24,65 +25,94 @@ namespace PingPong.Business.Tests
 												 });
 		}
 
+		Guid AddJob()
+		{
+			var jobId = Guid.NewGuid();
+
+			Context.RankingJobs.Add(new Data.RankingJob() { Id = jobId, State = Data.RankingJobStates.Running, StartedOn = DateTime.Now });
+			Context.SaveChanges();
+
+			return jobId;
+		}
+
+		[TestInitialize]
+		public void Initialise()
+		{
+			var options = new DbContextOptionsBuilder<Data.PingPongContext>().UseInMemoryDatabase(databaseName: "PingPong" + Guid.NewGuid().ToString()).Options;
+            Context = new Data.PingPongContext(options);
+
+			Player1 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test1Firstname", LastName= "Test1Lastname"  };
+			Player2 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test2Firstname", LastName= "Test2Lastname"  };
+			Player3 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test3Firstname", LastName= "Test3Lastname"  };
+			Player4 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test4Firstname", LastName= "Test4Lastname"  };
+			Player5 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test5Firstname", LastName= "Test5Lastname"  };
+			Player6 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test6Firstname", LastName= "Test6Lastname"  };
+
+			Context.Players.Add(Player1);
+			Context.Players.Add(Player2);
+			Context.Players.Add(Player3);
+			Context.Players.Add(Player4);
+			Context.Players.Add(Player5);
+			Context.Players.Add(Player6);
+			
+			//populate the games
+			AddGame(Context, Player1.Id, Player2.Id, 5, 3, Player1.Id);
+			AddGame(Context, Player1.Id, Player3.Id, 7, 4, Player1.Id);
+			AddGame(Context, Player1.Id, Player4.Id, 6, 3, Player1.Id);
+			AddGame(Context, Player2.Id, Player3.Id, 5, 3, Player2.Id);
+			AddGame(Context, Player2.Id, Player4.Id, 5, 3, Player2.Id);
+			AddGame(Context, Player3.Id, Player4.Id, 5, 3, Player3.Id);
+												
+			Context.SaveChanges();
+
+            this.Context = new Data.PingPongContext(options);
+            this.Service = new PlayerRanker(Context);
+		}
+
 		[TestMethod]
-        public void RanksPlayersCorrectly()
+		public void UpdatesJobCorrectly()
         {
-            var options = new DbContextOptionsBuilder<Data.PingPongContext>().UseInMemoryDatabase(databaseName: "PingPong").Options;
-            
-            using (var context = new Data.PingPongContext(options))
-            {		
-				var jobId = Guid.NewGuid();
+			Service.RankPlayers(AddJob());
 
-				var player1 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test1Firstname", LastName= "Test1Lastname"  };
-				var player2 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test2Firstname", LastName= "Test2Lastname"  };
-				var player3 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test3Firstname", LastName= "Test3Lastname"  };
-				var player4 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test4Firstname", LastName= "Test4Lastname"  };
-				var player5 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test5Firstname", LastName= "Test5Lastname"  };
-				var player6 = new Data.Player() { Id = Guid.NewGuid(), FirstName = "Test6Firstname", LastName= "Test6Lastname"  };
+			//make sure job is updated correctly
+			Assert.AreEqual(Context.RankingJobs.First().State, Data.RankingJobStates.Finished);
+			Assert.IsNotNull(Context.RankingJobs.First().FinishedOn);
+		}
 
-				context.Players.Add(player1);
-				context.Players.Add(player2);
-				context.Players.Add(player3);
-				context.Players.Add(player4);
-				context.Players.Add(player5);
-				context.Players.Add(player6);
+		[TestMethod]
+		public void CreatesTheRightAmountofRankEntities()
+        {
+			Service.RankPlayers(AddJob());
 
-				context.RankingJobs.Add(new Data.RankingJob() { Id = jobId, State = Data.RankingJobStates.Running, StartedOn = DateTime.Now });
+			//make sure that there is a ranking for all 6 players
+			Assert.AreEqual(Context.Rankings.Count(), 6);
 
-				//populate the games
-				AddGame(context, player1.Id, player2.Id, 5, 3, player1.Id);
-				AddGame(context, player1.Id, player3.Id, 7, 4, player1.Id);
-				AddGame(context, player1.Id, player4.Id, 6, 3, player1.Id);
-				AddGame(context, player2.Id, player3.Id, 5, 3, player2.Id);
-				AddGame(context, player2.Id, player4.Id, 5, 3, player2.Id);
-				AddGame(context, player3.Id, player4.Id, 5, 3, player3.Id);
-													
-				context.SaveChanges();
+		}
 
-                var service = new PlayerRanker(context);
+		[TestMethod]
+		public void CorrectlyRanks()
+        {
+			Service.RankPlayers(AddJob());
 
-                service.RankPlayers(jobId);
-				var rankings = context.Rankings.ToList();
+			//make sure the top 3 players are Test1, Test2 and Test3
+			var rank1 = Context.Rankings.First(r => r.Rank == 1);
+			var rank2 = Context.Rankings.First(r => r.Rank == 2);
+			var rank3 = Context.Rankings.First(r => r.Rank == 3);
 
-				//make sure job is updated correctly
-				Assert.AreEqual(context.RankingJobs.First().State, Data.RankingJobStates.Finished);
-				Assert.IsNotNull(context.RankingJobs.First().FinishedOn);
+			Assert.AreEqual(rank1.PlayerId, Player1.Id);
+			Assert.AreEqual(rank2.PlayerId, Player2.Id);
+			Assert.AreEqual(rank3.PlayerId, Player3.Id);
+		}
 
-				//make sure that there is a ranking for all 6 players
-				Assert.AreEqual(rankings.Count, 6);
+		[TestMethod]
+		public void AssignsJobIdToRanks()
+        {
+			var jobId = AddJob();
 
-				//make sure the top 3 players are Test1, Test2 and Test3
-				var rank1 = rankings.First(r => r.Rank == 1);
-				var rank2 = rankings.First(r => r.Rank == 2);
-				var rank3 = rankings.First(r => r.Rank == 3);
+			Service.RankPlayers(jobId);
 
-				Assert.AreEqual(rank1.PlayerId, player1.Id);
-				Assert.AreEqual(rank2.PlayerId, player2.Id);
-				Assert.AreEqual(rank3.PlayerId, player3.Id);
-
-				//make sure they all have the correct job Ids assigned
-				Assert.AreEqual(rankings.Count(r => r.RankingJobId == jobId), 6);
-            }
-        }
+			//make sure they all have the correct job Ids assigned
+			Assert.AreEqual(Context.Rankings.Count(r => r.RankingJobId == jobId), 6);
+		}		
     }
 }

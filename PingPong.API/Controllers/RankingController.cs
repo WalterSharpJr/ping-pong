@@ -12,5 +12,11 @@ namespace PingPong.API.Controllers
 		{
 			RankingService = rankingService;
 		}
+
+		[HttpPost("GetRankings")]
+		public Business.Models.RequestResult GetRankings([FromBody]Business.Models.Filter filter)
+		{
+			return RankingService.Get(filter.PageIndex, filter.PageCount);
+		}
     }
 }

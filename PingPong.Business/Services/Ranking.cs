@@ -35,6 +35,7 @@ namespace PingPong.Business.Services
 					return Models.RequestResult<IEnumerable<Models.Ranking>>.GetSuccess(StatusCodes.Status204NoContent, null);
 				}
 
+				var totalPages = (int)Math.Ceiling(decimal.Divide(Context.Rankings.Where(r => r.RankingJobId == latestJob.Id).Count(), pageCount));
 				var results = Context.Rankings.Where(r => r.RankingJobId == latestJob.Id)
 												.OrderByDescending(r => r.Rank)
 												.Skip(pageIndex * pageCount).Take(pageCount)
@@ -53,7 +54,7 @@ namespace PingPong.Business.Services
 					rankings.Add(ranking);
 				}
 
-				return Models.RequestResult<IEnumerable<Models.Ranking>>.GetSuccess(rankings);
+				return Models.RequestResult<IEnumerable<Models.Ranking>>.GetSuccess(rankings, totalPages);
 			}
 			catch (Exception)
 			{				

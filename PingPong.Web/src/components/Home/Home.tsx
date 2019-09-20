@@ -5,7 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import Topbar from '../Topbar/Topbar';
 import Games from '../../containers/Games';
 import Players from '../../containers/Players';
-import Rankings from '../AppPages/Rankings';
+import Rankings from '../../containers/Rankings';
 import RankingJobs from '../../containers/RankingJobs';
 
 export default class Home extends React.Component
@@ -23,6 +23,7 @@ export default class Home extends React.Component
 								<Switch>
 									<Route path="/games" component={ Games } />
 									<Route path="/players" component={ Players } />
+									<Route path="/ranking" component={ Rankings } />
 									<Route path="/rankingjobs" component={ RankingJobs } />
 									<Redirect from="/" to="/games"/>
 								</Switch>

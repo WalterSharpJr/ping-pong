@@ -34,7 +34,9 @@ namespace PingPong.API
 			services.AddScoped<IPlayersService, Players>();
 			services.AddScoped<IGamesService, Games>();
 			services.AddScoped<IRankingService, Ranking>();
-			//services.AddScoped<IRank, Ranking>();
+			services.AddScoped<IRankingJobsService, RankingJobs>();
+
+			services.AddScoped<RankingJobRunner>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -7,50 +7,17 @@ using System.Collections.Generic;
 
 namespace PingPong.Business.Services
 {
-    public class RankingJobs
+    public class RankingJobs: IRankingJobsService
     {
 		private readonly Data.PingPongContext Context;
+		private readonly RankingJobRunner JobRunner;
 
-        public RankingJobs(Data.PingPongContext context)
+        public RankingJobs(Data.PingPongContext context, RankingJobRunner jobRunner)
 		{
 			Context = context;
+			JobRunner = jobRunner;
 		}
-
-		protected void RankPlayers(Data.RankingJob job)
-		{
-			try
-			{
-				//get the player win metrics
-				var playerMetrics = Context.Games.AsQueryable()
-												.GroupBy(g => g.WinningPlayerId)
-												.Select(g => new { PlayerId = g.Key, WinCount = g.Count() })
-												.OrderByDescending(m => m.WinCount);
-
-				int ranking = 1;
-
-				foreach (var metric in playerMetrics)
-				{
-					var rank = new Data.Ranking();
-					rank.Id = Guid.NewGuid();
-					rank.PlayerId = metric.PlayerId;
-					rank.RankingJobId = job.Id;
-					rank.Rank = ranking;
-
-					ranking++;
-					Context.Rankings.Add(rank);
-				}
-
-				job.FinishedOn = DateTime.Now;
-				job.State = Data.RankingJobStates.Finished;
-
-				Context.SaveChanges();
-			}
-			catch (Exception)
-			{
-				//log the failure to rank players
-			}			
-		}
-
+		
 		/// <summary>
 		/// Creates a new ranking job entity in the database and fires off a task to rank the players in the background
 		/// </summary>
@@ -68,7 +35,8 @@ namespace PingPong.Business.Services
 				Context.SaveChanges();
 
 				//begin the process of ranking
-				Task.Run(() => RankPlayers(rankingJob));
+				JobRunner.JobId = rankingJob.Id;
+				JobRunner.StartAsync(new System.Threading.CancellationToken(false));
 
 				return Models.RequestResult.GetSuccess();
 			}
@@ -89,8 +57,9 @@ namespace PingPong.Business.Services
 			try	
 			{
 				var results = Context.RankingJobs.OrderByDescending(j => j.StartedOn).Skip(pageIndex * pageCount).Take(pageCount).ToList();
-								
-				return Models.RequestResult<IEnumerable<Data.RankingJob>>.GetSuccess(results);
+				var totalPages = (int)Math.Ceiling(decimal.Divide(Context.RankingJobs.Count(), pageCount));
+
+				return Models.RequestResult<IEnumerable<Data.RankingJob>>.GetSuccess(results, totalPages);
 			}
 			catch(Exception)
 			{

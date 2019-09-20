@@ -99,15 +99,10 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
 				</div>
 				}
 				
-				{ this.props.dataState === PageDataState.FETCHING &&
-					<Spinner></Spinner>
-				}
-
-				{ (this.props.request === null || this.props.request.data === null || this.props.request.data.length === 0) && this.props.dataState != PageDataState.FETCHING &&
-					<NoResults></NoResults>
-				}	
-
-
+				<Spinner show={ this.props.dataState === PageDataState.FETCHING }></Spinner>
+								
+				<NoResults show={ (this.props.request === null || this.props.request.data === null || this.props.request.data.length === 0) && this.props.dataState != PageDataState.FETCHING }></NoResults>
+				
 				<AddEditPlayer onPlayerAdded={ () => { this.props.onGetPlayers(this.Filter) } } ref={this.AddEditPlayer}></AddEditPlayer>	
 			</Page>
 		);

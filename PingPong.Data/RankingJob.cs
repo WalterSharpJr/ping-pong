@@ -2,7 +2,7 @@ using System;
 
 namespace PingPong.Data
 {
-	public enum RankingJobStates  { Running, Finished }
+	public enum RankingJobStates  { Running, Finished, Error }
 
     public class RankingJob
     {

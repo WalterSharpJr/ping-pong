@@ -99,14 +99,9 @@ export default class Games extends React.Component<{ onGetGames: (filters: Filte
 				</div>
 				}
 				
-				{ this.props.dataState === PageDataState.FETCHING &&
-					<Spinner></Spinner>
-				}
-
-				{ (this.props.request === null || this.props.request.data === null || this.props.request.data.length === 0) && this.props.dataState != PageDataState.FETCHING &&
-					<NoResults></NoResults>
-				}	
-
+				<Spinner show={ this.props.dataState === PageDataState.FETCHING }></Spinner>
+								
+				<NoResults show={ (this.props.request === null || this.props.request.data === null || this.props.request.data.length === 0) && this.props.dataState != PageDataState.FETCHING }></NoResults>				
 
 				<AddGame onGameAdded={ () => { this.props.onGetGames(this.Filter) } } ref={this.AddGame}></AddGame>	
 			</Page>

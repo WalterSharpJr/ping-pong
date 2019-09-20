@@ -1,15 +1,28 @@
 using Microsoft.AspNetCore.Mvc;
+using PingPong.Business.Services;
 
 namespace PingPong.API.Controllers
 {
 	[Route("api/rankingjobs")]
     public class RankingJobsController: Controller
     {
-        /*IRankingService RankingService;
+        IRankingJobsService RankingJobsService;
 
-        public RankingController(IRankingJobService rankingService)
+        public RankingJobsController(IRankingJobsService rankingJobsService)
 		{
-			RankingService = rankingService;
-		}*/
+			RankingJobsService = rankingJobsService;
+		}
+
+		[HttpPost]
+		public Business.Models.RequestResult Create()
+		{
+			return RankingJobsService.StartRankingJob();
+		}
+
+		[HttpPost("GetRankingJobs")]
+		public Business.Models.RequestResult GetRankingJobs([FromBody]Business.Models.Filter filter)
+		{
+			return RankingJobsService.Get(filter.PageIndex, filter.PageCount);
+		}
     }
 }

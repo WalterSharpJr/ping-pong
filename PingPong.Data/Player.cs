@@ -13,9 +13,7 @@ namespace PingPong.Data
 		[MaxLength(64)]
 		public string LastName { get; set; }
 		public DateTime CreatedOn { get; set; }	
-
-		public Ranking Rank { get; set; }
-
+		
 		/// <summary>
 		/// Returns the combined first and last name of the player
 		/// </summary>

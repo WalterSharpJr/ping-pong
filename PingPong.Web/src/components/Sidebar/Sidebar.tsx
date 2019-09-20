@@ -17,7 +17,7 @@ export default class Sidebar extends React.Component
 				<SidebarItem text="Players" route="/players" icon={ faWalking } ></SidebarItem>
 				<SidebarItem text="Ranking" route="/ranking" icon={ faTrophy } ></SidebarItem>
 				<hr className="sidebar-divider my-0"></hr>
-				<SidebarItem text="Ranking Jobs" route="/ranking-jobs" icon={ faCogs } ></SidebarItem>
+				<SidebarItem text="Ranking Jobs" route="/rankingjobs" icon={ faCogs } ></SidebarItem>
 			</ul>
 		);
 	}

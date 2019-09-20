@@ -1,7 +1,7 @@
 export default interface RankingJob
 {
-	Id: string;
-	StartedOn: Date;
-	FinishedOn: Date;
-	State: number;
+	id: string;
+	startedOn: Date;
+	finishedOn: Date;
+	state: number;
 }

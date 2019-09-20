@@ -45,3 +45,11 @@ PingPong is a web application that ranks ping pong players and is  built with .N
 	> npm install
 
 	> npm start
+
+### Running Tests
+
+Test cases can be run with the follwoing commands:
+	
+> cd ./PingPong.Business.Tests
+
+> dotnet test

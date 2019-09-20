@@ -6,3 +6,6 @@ PingPong.Data/bin/**
 
 PingPong.Business/obj/**
 PingPong.Business/bin/**
+
+PingPong.Business.Tests/obj/**
+PingPong.Business.Tests/bin/**

@@ -30,7 +30,7 @@ export default class Rankings extends React.Component<{ onGetRankings: (filters:
 	{
 		return (			
 			<Page title="Rankings">				
-				{ this.props.request && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				{ this.props.request && this.props.request.data && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
 				<div>
 				<div className="row">
 					<div className="col-sm-12">

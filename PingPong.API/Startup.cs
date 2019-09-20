@@ -36,6 +36,7 @@ namespace PingPong.API
 			services.AddScoped<IRankingService, Ranking>();
 			services.AddScoped<IRankingJobsService, RankingJobs>();
 
+			services.AddScoped<IPlayerRanker, PlayerRanker>();
 			services.AddScoped<RankingJobRunner>();
         }
 

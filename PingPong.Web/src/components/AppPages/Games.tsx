@@ -53,7 +53,7 @@ export default class Games extends React.Component<{ onGetGames: (filters: Filte
                     	<span className="text">Add Game</span>
                   	</a>
 				</Filterbox>
-				{ this.props.request && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				{ this.props.request && this.props.request.data && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
 				<div>
 				<div className="row">
 					<div className="col-sm-12">

@@ -53,7 +53,7 @@ export default class Players extends React.Component<{ onGetPlayers: (filters: F
                     	<span className="text">Add Player</span>
                   	</a>
 				</Filterbox>
-				{ this.props.request && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				{ this.props.request && this.props.request.data && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
 				<div>
 				<div className="row">
 					<div className="col-sm-12">

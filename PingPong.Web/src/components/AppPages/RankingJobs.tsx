@@ -54,7 +54,7 @@ export default class RankingJobs extends React.Component<{ onGetJobs: (filters: 
 						<span className="text">Start Ranking Job</span>
 						</a>
 				</Filterbox>
-				{ this.props.request && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
+				{ this.props.request && this.props.request.data && this.props.request.data.length > 0 && this.props.dataState != PageDataState.FETCHING &&
 				<div>
 				<div className="row">
 					<div className="col-sm-12">

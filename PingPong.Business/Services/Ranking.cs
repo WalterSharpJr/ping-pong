@@ -37,7 +37,7 @@ namespace PingPong.Business.Services
 
 				var totalPages = (int)Math.Ceiling(decimal.Divide(Context.Rankings.Where(r => r.RankingJobId == latestJob.Id).Count(), pageCount));
 				var results = Context.Rankings.Where(r => r.RankingJobId == latestJob.Id)
-												.OrderByDescending(r => r.Rank)
+												.OrderBy(r => r.Rank)
 												.Skip(pageIndex * pageCount).Take(pageCount)
 												.Include(r => r.Player)
 												.ToList();

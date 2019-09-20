@@ -22,6 +22,9 @@ namespace PingPong.Business.Services
 			{
 				var job = Context.RankingJobs.FirstOrDefault(j => j.Id == JobId);
 
+				//get the players
+				var players = Context.Players.ToList();
+
 				//get the player win metrics
 				var playerMetrics = Context.Games.AsQueryable()
 												.GroupBy(g => g.WinningPlayerId)
@@ -35,6 +38,22 @@ namespace PingPong.Business.Services
 					var rank = new Data.Ranking();
 					rank.Id = Guid.NewGuid();
 					rank.PlayerId = metric.PlayerId;
+					rank.RankingJobId = this.JobId;
+					rank.Rank = ranking;
+
+					ranking++;
+					Context.Rankings.Add(rank);
+
+					//remove the player from the players list
+					players.RemoveAll(p => p.Id == metric.PlayerId);
+				}
+
+				//remaining players don't have any wins so arent ranked, we'll just rank them in the order they came back form the query
+				foreach (var player in players)
+				{
+					var rank = new Data.Ranking();
+					rank.Id = Guid.NewGuid();
+					rank.PlayerId = player.Id;
 					rank.RankingJobId = this.JobId;
 					rank.Rank = ranking;
 

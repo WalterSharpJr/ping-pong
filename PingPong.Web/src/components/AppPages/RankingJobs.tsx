@@ -74,10 +74,10 @@ export default class RankingJobs extends React.Component<{ onGetJobs: (filters: 
 												{ g.state == 0 ? "Running" : "Finished" }
 											</td>											
 											<td>
-												{ g.startedOn.toString().split("T")[0] }
+												{ g.startedOn.toString().split("T")[0] } at { g.startedOn.toString().split("T")[1].split(".")[0] }
 											</td>
 											<td>
-												{ (g.finishedOn) ? g.finishedOn.toString().split("T")[0] : "N/A" }
+												{ (g.finishedOn) ? g.finishedOn.toString().split("T")[0] + " at " + g.finishedOn.toString().split("T")[1].split(".")[0]: "N/A" }
 											</td>											
 										</tr>
 									)
